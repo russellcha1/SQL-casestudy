@@ -1,0 +1,30 @@
+-- database: ./AdventureWorks.db
+
+
+--Product Questions
+--1
+SELECT pc.name, 
+MAX(p.ListPrice) AS 'Most Expensive Product', 
+MIN(p.ListPrice) AS 'Least Expensive Product', 
+MAX(p.ListPrice) - MIN(p.ListPrice) AS 'Range of Price',
+COUNT(p.ProductModelID) AS 'Number of Products'
+FROM Product as p
+LEFT JOIN ProductCategory as pc
+ON p.ProductCategoryID = pc.ProductCategoryID
+GROUP BY pc.ParentProductCategoryID;
+
+--2
+SELECT pc.name, 
+MAX(p.ListPrice) AS 'Most Expensive Product', 
+MIN(p.ListPrice) AS 'Least Expensive Product', 
+MAX(p.ListPrice) - MIN(p.ListPrice) AS 'Range of Price',
+COUNT(p.ProductModelID) AS 'Number of Products'
+FROM Product as p
+LEFT JOIN ProductCategory as pc
+ON p.ProductCategoryID = pc.ProductCategoryID
+GROUP BY pc.ProductCategoryID
+ORDER BY pc.ParentProductCategoryID, pc.ProductCategoryID
+
+-- The person documenting the info might have made a mistake or there really is no category for the item
+-- Creating a new category 'Other' could be a good solution to group products with no category
+-- Depending on where the null values, the row could be dropped
