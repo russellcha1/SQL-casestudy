@@ -2,6 +2,7 @@
 
 
 --Product Questions
+--Q1
 --1
 SELECT pc.name, 
 MAX(p.ListPrice) AS 'Most Expensive Product', 
@@ -24,7 +25,20 @@ LEFT JOIN ProductCategory as pc
 ON p.ProductCategoryID = pc.ProductCategoryID
 GROUP BY pc.ProductCategoryID
 ORDER BY pc.ParentProductCategoryID, pc.ProductCategoryID
-
+;
 -- The person documenting the info might have made a mistake or there really is no category for the item
 -- Creating a new category 'Other' could be a good solution to group products with no category
 -- Depending on where the null values, the row could be dropped
+
+--Q2
+--1
+SELECT COUNT(ProductID),
+CASE WHEN ListPrice < 1000 THEN 'Under 1000'
+WHEN ListPrice BETWEEN 1000 AND 2000 THEN 'Btwn 1000 and 2000'
+ELSE 'Above 2000'
+END AS Category
+FROM Product
+GROUP BY Category
+
+-- We did 0-1000, 1000-2000, 2000+ in order to have 3 categories (easy number to visualize)
+-- Product category would be helpful, as the category could influence the weight of spending the same amounnt of money
