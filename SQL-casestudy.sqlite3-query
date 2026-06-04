@@ -102,9 +102,7 @@ JOIN SalesOrderDetail   AS sod
 ;
 
 
---Q2
-
-
+--Q2: Categories
 SELECT (ROUND(AVG((p.ListPrice - p.StandardCost)/p.ListPrice),2)*100) AS "Profit Margin",
     pc2.Name
 FROM ProductCategory AS pc
@@ -112,10 +110,11 @@ JOIN ProductCategory AS pc2
     ON pc.ParentProductCategoryID = pc2.ProductCategoryID
 JOIN Product AS p
     ON p.ProductCategoryID = pc.ProductCategoryID
-GROUP BY pc2.Name;
+GROUP BY pc2.Name
+ORDER BY "Profit Margin" DESC;
 
 
---Q3
+--Q3: Subcategories
 SELECT pc.Name, 
         pc.ProductCategoryID, 
         (SELECT(ROUND(AVG((p.ListPrice - p.StandardCost)/p.ListPrice),2)*100)
@@ -136,7 +135,7 @@ FROM Address AS a
 JOIN CustomerAddress AS ca
     ON ca.AddressID = a.AddressID
 GROUP BY StateProvince
-ORDER BY Count;
+ORDER BY Count DESC;
 
 --Q5
 SELECT COUNT(*)
